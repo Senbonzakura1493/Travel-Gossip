@@ -50,6 +50,9 @@ class GlobeTrotterController extends AbstractController
     {   if(!$category){
         $category = new Category();
     }
+        $repo = $this->getDoctrine()->getRepository(Category::class);
+
+        $categories = $repo->findAll();
         $form = $this->createForm(CategoryType::class,$category);
         $form->handleRequest($request);
 
@@ -63,7 +66,8 @@ class GlobeTrotterController extends AbstractController
         }
 
         return $this->render('globe_trotter/newCategory.html.twig', [
-            'controller_name' => 'FrontController','form'=>$form->createView()
+            'controller_name' => 'FrontController','form'=>$form->createView(),
+            'categories'=>$categories
         ]);
     }
      /**

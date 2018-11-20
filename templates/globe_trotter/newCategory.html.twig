@@ -18,7 +18,7 @@
                     <a class="nav-link" href="/new">Ajouter un voyage</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="">Ajouter une catégorie de voyage</a>
+                    <a class="nav-link" href="/newCategory">Ajouter une catégorie de voyage</a>
                 </li>   
         </div>
     </nav>
@@ -42,4 +42,17 @@
     {{form_end(form)}} 
     </div>
 
+<section class="categories">
+<h2>Les catégories existantes</h2>
+        <div class = "row">
+
+        {% for categorie in categories %}
+            <div class="jumbotron">
+            <h1 class="display-3"> {{categorie.name}} </h1>
+            </div>
+                 
+        {% endfor %} 
+        
 {% endblock %}
+
+
