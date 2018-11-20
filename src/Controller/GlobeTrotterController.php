@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\CriticalArticle;
 use App\Form\CriticalArticleType;
+use App\Entity\Category;
+use App\Form\CategoryType;
 use APP\Repository\ArticleRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -41,7 +43,29 @@ class GlobeTrotterController extends AbstractController
             'controller_name' => 'FrontController',
         ]);
     }
+    /**
+     * @Route("/newCategory", name="category")
+     */
+    public function newCategory(Category $category = null  ,Request $request , ObjectManager $manager)
+    {   if(!$category){
+        $category = new Category();
+    }
+        $form = $this->createForm(CategoryType::class,$category);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()){
+            
+            
+            $manager->persist($category);
+            $manager->flush();
+
+            return $this->redirectToRoute('traveling');
+        }
+
+        return $this->render('globe_trotter/newCategory.html.twig', [
+            'controller_name' => 'FrontController','form'=>$form->createView()
+        ]);
+    }
      /**
      * @Route("/new", name="new")
      * @Route("/{id}/edit", name="edit")
@@ -67,7 +91,7 @@ class GlobeTrotterController extends AbstractController
             if(!$article->getId()){
                 $article->setDateTime(new \DateTime());
             }
-            $article->setPlaceToVisit("Muraille");
+            
             $manager->persist($article);
             $manager->flush();
 
@@ -105,7 +129,7 @@ class GlobeTrotterController extends AbstractController
             if(!$article->getId()){
                 $article->setDateTime(new \DateTime());
             }
-            $article->setPlaceToVisit("Muraille");
+            
             $manager->persist($article);
             $manager->flush();
 
