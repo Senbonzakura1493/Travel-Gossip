@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">Travel & Gossip</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/traveling">Les voyages <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/new">Ajouter un voyage</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/category">Ajouter une catégorie de voyage</a>
+                </li>   
+        </div>
+</nav>
+
+<div class="alert alert-dismissible alert-light">
+  <h4 class="alert-heading">Affinez la recherche</h4>
+  <form>
+  <fieldset>
+    <div class="form-group">
+      <label for="exampleSelect1">Example select</label>
+      <select class="form-control" id="exampleSelect1">
+        <option>Culinaire</option>
+        <option>Aventure</option>
+        <option>Detente</option>
+      </select>
+      <label for="exampleSelect1">Example select</label>
+      <select class="form-control" id="exampleSelect1">
+        <option>Maroc</option>
+        <option>Chine</option>
+        <option>Japon</option>
+      </select>
+    </div>    
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </fieldset>
+</form>
+</div>
+
+<section class="articles">
+<h2>Les voyages</h2>
+        <div class = "row">
+
+        {% for article in articles %}
+            {% if article.Category == "Culinaire" %}
+            <div class="jumbotron">
+            <h1 class="display-3"> {{article.Destination}} </h1>
+            <p class="lead">{{article.Titre}}</p>
+            <hr class="my-4">
+            <p>{{article.Category}}</p>
+            <p>{{article.Resume}}</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
+            </p>
+            </div>
+            {% endif %}        
+        {% endfor %} 
+
+            {% for article in articles %}
+            {% if article.Category == "Historique" %}
+            <div class="jumbotron">
+            <h1 class="display-3"> {{article.Destination}} </h1>
+            <p class="lead">{{article.Titre}}</p>
+            <hr class="my-4">
+            <p>{{article.Category}}</p>
+            <p>{{article.Resume}}</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
+            </p>
+            </div>
+            {% endif %}        
+            {% endfor %} 
+
+            {% for article in articles %}
+            {% if article.Category == "Aventure" %}
+            <div class="jumbotron">
+            <h1 class="display-3"> {{article.Destination}} </h1>
+            <p class="lead">{{article.Titre}}</p>
+            <hr class="my-4">
+            <p>{{article.Category}}</p>
+            <p>{{article.Resume}}</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
+            </p>
+            </div>
+            {% endif %}        
+            {% endfor %} 
+        
+        </div>
+
+</section>
+
+
+{% endblock %}
