@@ -44,7 +44,7 @@ class GlobeTrotterController extends AbstractController
         ]);
     }
     /**
-     * @Route("/newCategory", name="category")
+     * @Route("/newCategory", name="newCategory")
      */
     public function newCategory(Category $category = null  ,Request $request , ObjectManager $manager)
     {   if(!$category){
@@ -62,7 +62,7 @@ class GlobeTrotterController extends AbstractController
             $manager->persist($category);
             $manager->flush();
 
-            return $this->redirectToRoute('traveling');
+            return $this->redirectToRoute('newCategory');
         }
 
         return $this->render('globe_trotter/newCategory.html.twig', [
