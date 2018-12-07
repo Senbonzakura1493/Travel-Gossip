@@ -27,11 +27,9 @@
 
     
     <h2>Nouvelle catégorie de voyage</h2>
-    
-    
     {{form_start(form)}}
 
-        {{form_widget(form._token)}}
+        {{form_widget(form)}}
 
         <button type="submit" class="btn btn-primary">
             Soumettre
@@ -40,18 +38,4 @@
 
     {{form_end(form)}} 
     </div>
-
-<section class="categories">
-<h2>Les catégories existantes</h2>
-        <div class = "row">
-
-        {% for categorie in categories %}
-            <div class="jumbotron">
-            <h1 class="display-3"> {{categorie.name}} </h1>
-            </div>
-                 
-        {% endfor %} 
-        
 {% endblock %}
-
-

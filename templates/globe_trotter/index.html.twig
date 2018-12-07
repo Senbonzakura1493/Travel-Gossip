@@ -51,49 +51,21 @@
         <div class = "row">
 
         {% for article in articles %}
-            {% if article.Category == "Culinaire" %}
+            
             <div class="jumbotron">
             <h1 class="display-3"> {{article.Destination}} </h1>
             <p class="lead">{{article.Titre}}</p>
             <hr class="my-4">
-            <p>{{article.Category}}</p>
+            <p>{{article.category.name | raw}}</p>
             <p>{{article.Resume}}</p>
             <p class="lead">
             <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
             </p>
             </div>
-            {% endif %}        
+                  
         {% endfor %} 
 
-            {% for article in articles %}
-            {% if article.Category == "Historique" %}
-            <div class="jumbotron">
-            <h1 class="display-3"> {{article.Destination}} </h1>
-            <p class="lead">{{article.Titre}}</p>
-            <hr class="my-4">
-            <p>{{article.Category}}</p>
-            <p>{{article.Resume}}</p>
-            <p class="lead">
-            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
-            </p>
-            </div>
-            {% endif %}        
-            {% endfor %} 
-
-            {% for article in articles %}
-            {% if article.Category == "Aventure" %}
-            <div class="jumbotron">
-            <h1 class="display-3"> {{article.Destination}} </h1>
-            <p class="lead">{{article.Titre}}</p>
-            <hr class="my-4">
-            <p>{{article.Category}}</p>
-            <p>{{article.Resume}}</p>
-            <p class="lead">
-            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
-            </p>
-            </div>
-            {% endif %}        
-            {% endfor %} 
+            
         
         </div>
 

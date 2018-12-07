@@ -11,41 +11,39 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-        for($i=1;$i<=10;$i++){
-            $PlaceToVisit="rialto";
-            $article = new CriticalArticle();
-            $article->setTitre("Au pays des raviolis");
-            $article->setCategory("Culinaire");
-            $article->setDestination("Venise");
-            $article->setResume("les meilleurs spaghettis ever!!");
-            $article->setPlaceToVisit($PlaceToVisit);
-            $article->setDateTime(new \DateTime());
-            
-            $manager->persist($article);
 
+        $faker = \Faker\Factory::create('fr_FR');
+
+
+        //creer trois catégories. 
+        for($j=1;$j<=10;$j++){
+            $category = new Category();
+            $category->setName("Detente");
+            $manager->persist($category);
+
+            for($i=1;$i<=mt_rand(4,6);$i++){
+                
+                $article = new CriticalArticle();
+                $content = '<p>';
+                $content .= join($faker->paragraphs(5),'</p><p>');
+                $content = '</p>';
+                
+                $article = new CriticalArticle();
+                $article->setCategory();
+                $article->setTitre($faker->sentence());
+                $article->setDestination($faker->sentence());
+                $article->setResume($content);
+                $article->setPlaceToVisit($faker->sentence());
+                $article->setDateTime(new \DateTime());
+
+                $category->addCriticalArticle($article);
+
+                $manager->persist($article);
+    
+            }
         }
-        for($i=11;$i<=20;$i++){
-            $PlaceToVisit="rialto";
-            $article = new CriticalArticle();
-            $article->setTitre("Au pays des mille et une nuits");
-            $article->setCategory("Historique");
-            $article->setDestination("Inde");
-            $article->setResume("Un monde tout en couleur et saveur");
-            $article->setPlaceToVisit($PlaceToVisit);
-            $article->setDateTime(new \DateTime());
-            
-            $manager->persist($article);
-
-        }
-
-        $category = new Category();
-        $category->setName("Detente");
-        $manager->persist($category);
-        $category2 = new Category();
-        $category2->setName("Sportif");
-        $manager->persist($category2);
+        
+        
 
         $manager->flush();
     }

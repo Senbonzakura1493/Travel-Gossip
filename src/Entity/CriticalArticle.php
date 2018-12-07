@@ -21,10 +21,7 @@ class CriticalArticle
      */
     private $Titre;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Category;
+    
 
     /**
      * @ORM\Column(type="datetime")
@@ -46,6 +43,12 @@ class CriticalArticle
      */
     private $Resume;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="CriticalArticles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,14 +66,14 @@ class CriticalArticle
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): ?category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(string $Category): self
+    public function setCategory(category $Category): self
     {
-        $this->Category = $Category;
+        $this->category = $Category;
 
         return $this;
     }
