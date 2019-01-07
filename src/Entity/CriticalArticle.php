@@ -24,7 +24,7 @@ class CriticalArticle
     
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $DateTime;
 
@@ -44,7 +44,7 @@ class CriticalArticle
     private $Resume;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="CriticalArticles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category",inversedBy="CriticalArticles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -78,12 +78,12 @@ class CriticalArticle
         return $this;
     }
 
-    public function getDateTime(): ?\DateTimeInterface
+    public function getDateTime(): ?string
     {
         return $this->DateTime;
     }
 
-    public function setDateTime(\DateTimeInterface $DateTime): self
+    public function setDateTime(string $DateTime): self
     {
         $this->DateTime = $DateTime;
 

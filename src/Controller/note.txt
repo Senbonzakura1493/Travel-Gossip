@@ -1,0 +1,198 @@
+if(!$category){
+                $response->headers->set('Content-Type', 'application/text');
+                $response->headers->set('Access-Control-Allow-Origin', '*');
+                $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+                $response->headers->set('Access-Control-Allow-Headers', 'Content-Type',true);
+
+                //$data = json_decode($request->getContent(), true); // je decode mes données json reçues
+                $category = new Category(); // je crée une catégorie
+                $form = $this->createForm(CategoryType::class , $category); // je crée un formulaire lié à ça 
+            
+            
+                //$form->submit($data); // je valide et soumet mes données dans le formulaire
+                $category->setName($request->get('name')); // je place  la valeur du champ nom dans le nom de ma catégorie
+    
+                if ($form->isSubmitted() && $form->isValid()) { 
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($category);
+                    $em->flush(); // j'envoie dans la base de donnée. 
+                    return  $this->render('globe_trotter/newCatAPI.html.twig', [ // ici j'éssaie de faire afficher le truc mais ça va pas pour le moment
+                        'controller_name' => 'FrontController','form'=>$form->createView(),'response'=>$response->setStatusCode('404')
+                    
+                    ]);
+                } else {
+               
+                    return $response->setStatusCode('404');
+                }
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') // j'appelle juste la page avec mon formulaire GET.
+        {
+            if(!$category){
+                $category = new Category();
+            }
+                $repo = $this->getDoctrine()->getRepository(Category::class);
+        
+                $categories = $repo->findAll();
+                $form = $this->createForm(CategoryType::class,$category);
+                $form->handleRequest($request);
+        
+                if ($form->isSubmitted() && $form->isValid()){
+                    
+                    
+                    //$manager->persist($category);
+                    //$manager->flush();
+        
+                    //return $this->redirectToRoute(sprintf('/api/newCategory?name=%s',$request->get('name')));
+                }
+        
+                return $this->render('globe_trotter/newCatAPI.html.twig', [
+                    'controller_name' => 'FrontController','form'=>$form->createView(),
+                    
+                ]);
+        }
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            $response->headers->set('Content-Type', 'application/text');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+            $response->headers->set('Access-Control-Allow-Headers', 'Content-Type',true);
+
+            $name = null;
+            $category = new Category();
+            
+            $repo = $this->getDoctrine()->getRepository(Category::class);
+        
+            $categories = $repo->findAll();
+            $form = $this->createForm(CategoryType::class,$category);
+            $form->handleRequest($request);
+        
+            if ($form->isSubmitted() && $form->isValid()){
+                    
+                    $name = $category->getName();
+                    $manager->persist($category);
+                    $manager->flush();
+                    return $this->redirectToRoute('api_PostnewCategory');
+                    
+                }
+                return $this->render('globe_trotter/newCatAPI.html.twig', [
+                    'controller_name' => 'FrontController','form'=>$form->createView(),
+                    'name'=>$name
+                ]);  
+        }
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $normalizer = new ObjectNormalizer();
+            $normalizer->setCircularReferenceLimit(1);
+            // Add Circular reference handler
+            $normalizer->setCircularReferenceHandler(function ($object) {
+                return $object->getId();
+            });
+            $encoders = array(new JsonEncoder());
+            $normalizers = array($normalizer);
+        
+            $serializer = new Serializer($normalizers, $encoders);
+
+
+            $article = new CriticalArticle();
+            $form = $this->createForm(CriticalArticleType::class,$article,array(
+                'action' => $this->generateUrl('api_newTravel'),
+                'method' => 'POST',
+            ));
+            $form->handleRequest($request);
+        
+            if ($form->isSubmitted() && $form->isValid()){
+                if(!$article->getId()){
+                    $article->setDateTime(new \DateTime());
+                }
+            
+                $manager->persist($article);
+                $manager->flush();
+                $jsonContent = $serializer->serialize($article, 'json');
+
+                $response = new JsonResponse();
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode('302');
+
+                return $response;
+
+                
+            }
+
+
+            return $response;
+            
+            
+        }
+
+
+
+
+         $response = new Response();
+                $response->headers->set('Content-Type', 'application/text');
+                $response->headers->set('Access-Control-Allow-Origin', '*');
+                $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+                $response->headers->set('Access-Control-Allow-Headers', 'Content-Type',true);
+                
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
+            {   
+                $article = new CriticalArticle();
+                $form = $this->createForm(CriticalArticleType::class,$article,array(
+                    'action' => $this->generateUrl('api_newTravel'),
+                    'method' => 'POST',
+                ));
+                    return $this->render('globe_trotter/new.html.twig', [
+                        'controller_name' => 'FrontController','form'=>$form->createView(),'editMode' => $article->getId() !== null ]); 
+            }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $normalizer = new ObjectNormalizer();
+            $normalizer->setCircularReferenceLimit(1);
+            // Add Circular reference handler
+            $normalizer->setCircularReferenceHandler(function ($object) {
+                return $object->getId();
+            });
+            $encoders = array(new JsonEncoder());
+            $normalizers = array($normalizer);
+        
+            $serializer = new Serializer($normalizers, $encoders);
+
+
+            $article = new CriticalArticle();
+            $form = $this->createForm(CriticalArticleType::class,$article,array(
+                'action' => $this->generateUrl('api_newTravel'),
+                'method' => 'POST',
+            ));
+            $form->handleRequest($request);
+        
+            if ($form->isSubmitted() && $form->isValid()){
+                if(!$article->getId()){
+                    $article->setDateTime(new \DateTime());
+                }
+            
+                $manager->persist($article);
+                $manager->flush();
+                $jsonContent = $serializer->serialize($article, 'json');
+
+                $response = new JsonResponse();
+                $response->setContent($jsonContent);
+                $response->headers->set('Content-Type', 'application/json');
+                $response->setStatusCode('302');
+
+                return $response;
+
+                
+            }
+
+
+            return $response;
+            
+            
+        }

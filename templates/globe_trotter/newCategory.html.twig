@@ -31,7 +31,7 @@
     
     {{form_start(form)}}
 
-        {{form_widget(form._token)}}
+        {{form_widget(form)}}
 
         <button type="submit" class="btn btn-primary">
             Soumettre
@@ -39,17 +39,20 @@
         
 
     {{form_end(form)}} 
-    </div>
+</div>
+{% if editedMode %}
+        <p class="lead">une nouvelle catégorie a été ajoutée ! </p>
+        <hr class="my-4">           
+        
+{% endif %}
 
 <section class="categories">
 <h2>Les catégories existantes</h2>
         <div class = "row">
-
         {% for categorie in categories %}
             <div class="jumbotron">
-            <h1 class="display-3"> {{categorie.name}} </h1>
-            </div>
-                 
+            <h1 class="display-3"> {{categorie.name}} </h1>               
+            </div>            
         {% endfor %} 
         
 {% endblock %}

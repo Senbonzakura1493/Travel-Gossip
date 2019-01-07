@@ -49,30 +49,35 @@ class GlobeTrotterController extends AbstractController
     public function newCategory(Category $category = null  ,Request $request , ObjectManager $manager)
     {   if(!$category){
         $category = new Category();
+        $editedmode = false;
     }
         $repo = $this->getDoctrine()->getRepository(Category::class);
 
         $categories = $repo->findAll();
         $form = $this->createForm(CategoryType::class,$category);
         $form->handleRequest($request);
+        $editedmode = false;
 
         if ($form->isSubmitted() && $form->isValid()){
             
-            
             $manager->persist($category);
+            
             $manager->flush();
-
-            return $this->redirectToRoute('newCategory');
+            $editedmode = true;
+            return $this->render('globe_trotter/newCategory.html.twig', [
+                'controller_name' => 'FrontController','form'=>$form->createView(),
+                'categories'=>$categories,'editedMode'=> $editedmode
+            ]);
         }
 
         return $this->render('globe_trotter/newCategory.html.twig', [
             'controller_name' => 'FrontController','form'=>$form->createView(),
-            'categories'=>$categories
+            'categories'=>$categories,'editedMode'=> $editedmode
         ]);
     }
      /**
      * @Route("/new", name="new")
-     * @Route("/{id}/edit", name="edit")
+     * 
      */
     public function new(CriticalArticle $article = null ,Request $request , ObjectManager $manager)
     {
@@ -92,9 +97,9 @@ class GlobeTrotterController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()){
-            if(!$article->getId()){
-                $article->setDateTime(new \DateTime());
-            }
+         //   if(!$article->getId()){
+          //      $article->setDateTime(new \DateTime());
+          //  }
             
             $manager->persist($article);
             $manager->flush();
@@ -146,4 +151,23 @@ class GlobeTrotterController extends AbstractController
             'editMode' => $article->getId() !== null
         ]);
     }
+/**
+     * @Route("/deleteTravel/{id}", name="deleteTravel")
+*/
+public function deleteTravel($id)
+{
+    try {        
+        if ($id != null) {
+                $em = $this->getdoctrine()->getManager();
+                $travel = $em->getRepository(CriticalArticle::class)->find($id);
+                $em->remove($travel);
+                $em->flush(); 
+                return $this->redirectToRoute('traveling');            
+        }
+    }
+    catch (Exception $e) {
+        $this->addFlash('notice', "Error");
+    }
+    return $this->redirectToRoute('traveling');
+}
 }

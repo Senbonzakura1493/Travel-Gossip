@@ -1,5 +1,22 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\GlobeTrotterAPIController::index
+    methods: [GET,HEAD]
+api_home:
+    path: /api/home
+    controller: App\Controller\GlobeTrotterAPIController::home
+    methods: [GET,HEAD]
 
+api_Category:
+    path: api/Category
+    controller: App\Controller\GlobeTrotterAPIController::Category
+    methods: [GET,HEAD]
+api_AddNewCategory:
+    path: api/AddNewCategory
+    controller: App\Controller\GlobeTrotterAPIController::AddNewCategory
+    methods: [GET,POST]
+api_newTravel:
+    path: api/newTravel
+    controller: App\Controller\GlobeTrotterAPIController::newTravel
+    methods: [POST,OPTIONS]
 
