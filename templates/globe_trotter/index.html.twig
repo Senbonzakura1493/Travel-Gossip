@@ -4,13 +4,13 @@
 
 {% block body %}
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <a class="navbar-brand" href="/">Travel & Gossip</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
+        <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/traveling">Les voyages <span class="sr-only">(current)</span></a>
@@ -23,10 +23,11 @@
                 </li>   
         </div>
 </nav>
+<img src="https://www.rsatravelinsurance.com/sites/rsatravelinsurance.com/files/cuba.jpg" width = 1550px height =500px  ></img>
 
 
 <section class="articles">
-<h2>Les voyages</h2>
+
         <div class = "row">
 
         {% for article in articles %}
@@ -39,8 +40,8 @@
             <p>{{article.Resume}}</p>
             <p>{{article.dateTime}}</p>
             <p class="lead">
-            <a class="btn btn-primary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
-            <a class="btn btn-primary btn-lg" href="{{path('deleteTravel', {'id': article.id}) }}" role="button">Supprimer</a>
+            <a class="btn btn-secondary btn-lg" href="{{path('edit', {'article': article , 'id': article.id}) }}" role="button">Modifier</a>
+            <a class="btn btn-secondary btn-lg" href="{{path('deleteTravel', {'id': article.id}) }}" role="button">Supprimer</a>
             </p>
             </div>
                   

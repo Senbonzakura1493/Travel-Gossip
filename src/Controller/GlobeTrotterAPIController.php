@@ -49,6 +49,7 @@ class GlobeTrotterAPIController extends AbstractController
     public function index()
     {
         $response = new JsonResponse();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         $normalizer = new ObjectNormalizer();
         $normalizer->setCircularReferenceLimit(1);
 
@@ -79,7 +80,7 @@ class GlobeTrotterAPIController extends AbstractController
             return $response;
         }
         else {
-
+            
             $response->setStatusCode('404');
 
         }
@@ -257,7 +258,7 @@ class GlobeTrotterAPIController extends AbstractController
                 }
             else 
                 {
-                    echo('there is a problem here 2');
+                    
                     $query['valid'] = false; 
                     $response->setStatusCode('404');
                 }        
