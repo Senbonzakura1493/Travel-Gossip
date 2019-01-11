@@ -22,39 +22,28 @@
                 </li>   
         </div>
     </nav>
-     <img src="https://i1.wp.com/travelshopgirl.com/wp-content/uploads/2014/06/wishyouwerehere.png?w=1037&h=471&crop&ssl=1" width = 1500px height=400px></img>     
+    <img src="https://cdn-images-1.medium.com/max/1200/1*kfoZJqoU5IDWz-u7ZclDtQ.jpeg" width = 1550px height =400px></img>
     <div class="jumbotron">
 
-    
-    <h2>Nouvelle catégorie de voyage</h2>
-    
+    {% if editMode %}
+    <h2>Modification de categorie </h2>
+    {% else %}
+    <h2>Nouvelle catégorie</h2>
+    {% endif %}
     
     {{form_start(form)}}
 
         {{form_widget(form)}}
 
         <button type="submit" class="btn btn-primary">
+        {% if editMode %}
+            Modifier
+        {% else %}
             Soumettre
         </button>
-        
+        {% endif %}
 
     {{form_end(form)}} 
-</div>
-{% if editedMode %}
-        <p class="lead">une nouvelle catégorie a été ajoutée ! </p>
-        <hr class="my-4">           
-        
-{% endif %}
+    </div>
 
-<section class="categories">
-<h2>Les catégories existantes</h2>
-        <div class = "row">
-        {% for categorie in categories %}
-            <div class="jumbotron">
-            <h1 class="display-3"> {{categorie.name}} </h1>               
-            </div>            
-        {% endfor %} 
-        
 {% endblock %}
-
-

@@ -33,6 +33,19 @@ class GlobeTrotterController extends AbstractController
             'articles'=>$articles
         ]);
     }
+    /**
+     * @Route("/Categories", name="categories")
+     */
+    public function categories()
+    {
+        $repo = $this->getDoctrine()->getRepository(Category::class);
+
+        $categories = $repo->findAll();
+        return $this->render('globe_trotter/Categories.html.twig', [
+            'controller_name' => 'FrontController',
+            'categories'=>$categories
+        ]);
+    }
 
     /**
      * @Route("/", name="home")
@@ -73,6 +86,40 @@ class GlobeTrotterController extends AbstractController
         return $this->render('globe_trotter/newCategory.html.twig', [
             'controller_name' => 'FrontController','form'=>$form->createView(),
             'categories'=>$categories,'editedMode'=> $editedmode
+        ]);
+    }
+
+        /**
+     * @Route("/editCategory/{id}", name="editCategory")
+     */
+    public function editCategory(Category $category ,Request $request , ObjectManager $manager)
+    {
+        if(!$category){
+            $category = new Category();
+        }
+        
+
+        //$form = $this->createFormBuilder($article)
+        //             ->add('Category')
+        //             ->add('Destination')
+        //             ->add('PlaceToVisit',CollectionType::class)
+        //             ->add('Resume',TextareaType::class)
+        //             ->getForm();
+
+        $form = $this->createForm(CategoryType::class,$category);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()){
+            $manager->persist($category);
+            $manager->flush();
+
+            return $this->redirectToRoute('newCategory');
+        }
+
+
+        return $this->render('globe_trotter/newCategory.html.twig', [
+            'controller_name' => 'FrontController','form'=>$form->createView(),
+            'editMode' => $category->getId() !== null
         ]);
     }
      /**
