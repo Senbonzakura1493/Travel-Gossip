@@ -69,23 +69,21 @@ class GlobeTrotterController extends AbstractController
         $categories = $repo->findAll();
         $form = $this->createForm(CategoryType::class,$category);
         $form->handleRequest($request);
-        $editedmode = false;
+        
 
         if ($form->isSubmitted() && $form->isValid()){
             
             $manager->persist($category);
             
             $manager->flush();
-            $editedmode = true;
-            return $this->render('globe_trotter/newCategory.html.twig', [
-                'controller_name' => 'FrontController','form'=>$form->createView(),
-                'categories'=>$categories,'editedMode'=> $editedmode
-            ]);
+            
+            return $this->redirectToRoute('categories');
+           
         }
 
         return $this->render('globe_trotter/newCategory.html.twig', [
             'controller_name' => 'FrontController','form'=>$form->createView(),
-            'categories'=>$categories,'editedMode'=> $editedmode
+            'categories'=>$categories,'editMode' => $category->getId() !== null
         ]);
     }
 
@@ -113,7 +111,7 @@ class GlobeTrotterController extends AbstractController
             $manager->persist($category);
             $manager->flush();
 
-            return $this->redirectToRoute('newCategory');
+            return $this->redirectToRoute('categories');
         }
 
 
